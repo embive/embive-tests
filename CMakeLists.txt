@@ -7,9 +7,9 @@ set(CMAKE_C_COMPILER riscv32-unknown-elf-gcc)
 set(CMAKE_ASM_COMPILER riscv32-unknown-elf-gcc)
 set(_CMAKE_TOOLCHAIN_PREFIX riscv32-unknown-elf-)
 
-set(CMAKE_C_FLAGS "-march=rv32ima_zifencei -mabi=ilp32 -O0")
-set(CMAKE_ASM_FLAGS "-march=rv32ima_zifencei -mabi=ilp32 -O0")
-set(CMAKE_EXE_LINKER_FLAGS "-march=rv32ima_zifencei -nostartfiles -T ${CMAKE_CURRENT_SOURCE_DIR}/memory.ld")
+set(CMAKE_C_FLAGS "-march=rv32imac_zifencei -mabi=ilp32 -O0")
+set(CMAKE_ASM_FLAGS "-march=rv32imac_zifencei -mabi=ilp32 -O0")
+set(CMAKE_EXE_LINKER_FLAGS "-march=rv32imac_zifencei -nostartfiles -T ${CMAKE_CURRENT_SOURCE_DIR}/memory.ld")
 
 set_property(
         DIRECTORY
@@ -34,6 +34,6 @@ add_executable(${target_name}.elf "${source_file}")
 target_include_directories(${target_name}.elf PRIVATE ./include/ )
 
 add_custom_command(TARGET ${target_name}.elf POST_BUILD
-        COMMAND ${CMAKE_OBJCOPY} -O binary  ${target_name}.elf  "out/${target_dir_name}/${target_name}.bin"
-        COMMENT "Invoking: Objcopy")
+        COMMAND ${CMAKE_COMMAND} -E copy  ${target_name}.elf  "out/${target_dir_name}/${target_name}.elf"
+        COMMENT "Invoking: Copy ELF")
 endforeach()
